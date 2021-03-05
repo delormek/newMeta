@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Bonobo T4 Generator</title>
+<style type="text/css">
+body { font: 14px/1.3 verdana, arial, helvetica, sans-serif; }
+h1 { font-size:1.3em; }
+h2 { font-size:1.2em; }
+a:link { color:#33c; } 
+a:visited { color:#339; }
+p { max-width: 60em; }
+a img { border:none; }
+</style>
+<script type="text/javascript">
+
+var offhand = false;
+const BAG_IMAGES_ARRAY = ['T4_BAG.png','T4_SATCHEL.png'];
+const HEAD_IMAGES_ARRAY = ['T4_HEAD_CLOTH_HELL.png','T4_HEAD_CLOTH_KEEPER.png','T4_HEAD_CLOTH_MORGANA.png','T4_HEAD_CLOTH_PUR.png','T4_HEAD_CLOTH_ROYAL.png','T4_HEAD_CLOTH_SET1.png','T4_HEAD_CLOTH_SET2.png','T4_HEAD_CLOTH_SET3.png','T4_HEAD_LEATHER_HELL.png','T4_HEAD_LEATHER_MORGANA.png','T4_HEAD_LEATHER_ROYAL.png','T4_HEAD_LEATHER_SET1.png','T4_HEAD_LEATHER_SET2.png','T4_HEAD_LEATHER_SET3.png','T4_HEAD_LEATHER_TEN.png','T4_HEAD_LEATHER_UNDEAD.png','T4_HEAD_PLATE_HELL.png','T4_HEAD_PLATE_KEEPER.png','T4_HEAD_PLATE_ROYAL.png','T4_HEAD_PLATE_SET1.png','T4_HEAD_PLATE_SET2.png','T4_HEAD_PLATE_SET3.png','T4_HEAD_PLATE_UNDEAD.png','T4_HEAD_PLATE_VALOR.png'];
+const CAPE_IMAGES_ARRAY = ['T4_CAPE.png','T4_CAPEITEM_DEMON.png','T4_CAPEITEM_FW_BRIDGEWATCH.png','T4_CAPEITEM_FW_FORTSTERLING.png','T4_CAPEITEM_FW_LYMHURST.png','T4_CAPEITEM_FW_MARTLOCK.png','T4_CAPEITEM_FW_THETFORD.png','T4_CAPEITEM_HERETIC.png','T4_CAPEITEM_KEEPER.png','T4_CAPEITEM_MORGANA.png','T4_CAPEITEM_UNDEAD.png'];
+const WEAP_IMAGES_ARRAY = ['T4_2H_ARCANESTAFF.png','T4_2H_ARCANESTAFF_HELL.png','T4_2H_AXE.png','T4_2H_BOW.png','T4_2H_BOW_HELL.png','T4_2H_BOW_KEEPER.png','T4_2H_BRIDLED_FURY.png','T4_2H_CLAWPAIR.png','T4_2H_CLAYMORE.png','T4_2H_CLEAVER_HELL.png','T4_2H_COMBATSTAFF_MORGANA.png','T4_2H_CROSSBOW.png','T4_2H_CROSSBOWLARGE.png','T4_2H_CROSSBOWLARGE_MORGANA.png','T4_2H_CURSEDSTAFF.png','T4_2H_CURSEDSTAFF_MORGANA.png','T4_2H_DAGGERPAIR.png','T4_2H_DAWNSONG.png','T4_2H_DEMONICSTAFF.png','T4_2H_DIVINESTAFF.png','T4_2H_DOUBLEBLADEDSTAFF.png','T4_2H_DUALAXE_KEEPER.png','T4_2H_DUALCROSSBOW_HELL.png','T4_2H_DUALHAMMER_HELL.png','T4_2H_DUALSCIMITAR_UNDEAD.png','T4_2H_DUALSICKLE_UNDEAD.png','T4_2H_DUALSWORD.png','T4_2H_ENERGY_SHAPER.png','T4_2H_ENIGMATICORB_MORGANA.png','T4_2H_ENIGMATICSTAFF.png','T4_2H_EVENSONG.png','T4_2H_FIRESTAFF.png','T4_2H_FIRESTAFF_HELL.png','T4_2H_FLAIL.png','T4_2H_FROSTSTAFF.png','T4_2H_GLACIALSTAFF.png','T4_2H_GLAIVE.png','T4_2H_GRAILSEEKER.png','T4_2H_HALBERD.png','T4_2H_HALBERD_MORGANA.png','T4_2H_HAMMER.png','T4_2H_HAMMER_UNDEAD.png','T4_2H_HAND_OF_JUSTICE.png','T4_2H_HARPOON_HELL.png','T4_2H_HOLYSTAFF.png','T4_2H_HOLYSTAFF_HELL.png','T4_2H_HOLYSTAFF_UNDEAD.png','T4_2H_ICECRYSTAL_UNDEAD.png','T4_2H_ICEGAUNTLETS_HELL.png','T4_2H_INFERNOSTAFF.png','T4_2H_INFERNOSTAFF_MORGANA.png','T4_2H_IRONCLADEDSTAFF.png','T4_2H_IRONGAUNTLETS_HELL.png','T4_2H_KINGMAKER.png','T4_2H_LONGBOW.png','T4_2H_LONGBOW_UNDEAD.png','T4_2H_MACE.png','T4_2H_MACE_MORGANA.png','T4_2H_MISTPIERCER.png','T4_2H_NATURESTAFF.png','T4_2H_NATURESTAFF_HELL.png','T4_2H_NATURESTAFF_KEEPER.png','T4_2H_OATHKEEPERS.png','T4_2H_POLEHAMMER.png','T4_2H_QUARTERSTAFF.png','T4_2H_RAM_KEEPER.png','T4_2H_REALMBREAKER.png','T4_2H_REPEATINGCROSSBOW_UNDEAD.png','T4_2H_ROCKSTAFF_KEEPER.png','T4_2H_SCYTHE_HELL.png','T4_2H_SKULLORB_HELL.png','T4_2H_SPEAR.png','T4_2H_TRIDENT_UNDEAD.png','T4_2H_TWINSCYTHE_HELL.png','T4_2H_WARBOW.png','T4_2H_WILDSTAFF.png','T4_MAIN_1HCROSSBOW.png','T4_MAIN_ARCANESTAFF.png','T4_MAIN_ARCANESTAFF_UNDEAD.png','T4_MAIN_AXE.png','T4_MAIN_CHILLHOWL.png','T4_MAIN_CURSEDSTAFF.png','T4_MAIN_CURSEDSTAFF_UNDEAD.png','T4_MAIN_DAGGER.png','T4_MAIN_DAYBREAKER.png','T4_MAIN_FIRESTAFF.png','T4_MAIN_FIRESTAFF_KEEPER.png','T4_MAIN_FROSTSTAFF.png','T4_MAIN_FROSTSTAFF_KEEPER.png','T4_MAIN_HALLOWFALL.png','T4_MAIN_HAMMER.png','T4_MAIN_HOLYSTAFF.png','T4_MAIN_HOLYSTAFF_MORGANA.png','T4_MAIN_IRONROOT.png','T4_MAIN_MACE.png','T4_MAIN_MACE_HELL.png','T4_MAIN_NATURESTAFF.png','T4_MAIN_NATURESTAFF_KEEPER.png','T4_MAIN_RAPIER_MORGANA.png','T4_MAIN_ROCKMACE_KEEPER.png','T4_MAIN_SCIMITAR_MORGANA.png','T4_MAIN_SHADOWCALLER.png','T4_MAIN_SPEAR.png','T4_MAIN_SPEAR_KEEPER.png','T4_MAIN_SWORD.png'];
+const CHEST_IMAGES_ARRAY = ['T4_ARMOR_CLOTH_HELL.png','T4_ARMOR_CLOTH_KEEPER.png','T4_ARMOR_CLOTH_MORGANA.png','T4_ARMOR_CLOTH_PUR.png','T4_ARMOR_CLOTH_ROYAL.png','T4_ARMOR_CLOTH_SET1.png','T4_ARMOR_CLOTH_SET2.png','T4_ARMOR_CLOTH_SET3.png','T4_ARMOR_LEATHER_HELL.png','T4_ARMOR_LEATHER_MORGANA.png','T4_ARMOR_LEATHER_ROYAL.png','T4_ARMOR_LEATHER_SET1.png','T4_ARMOR_LEATHER_SET2.png','T4_ARMOR_LEATHER_SET3.png','T4_ARMOR_LEATHER_TEN.png','T4_ARMOR_LEATHER_UNDEAD.png','T4_ARMOR_PLATE_HELL.png','T4_ARMOR_PLATE_KEEPER.png','T4_ARMOR_PLATE_ROYAL.png','T4_ARMOR_PLATE_SET1.png','T4_ARMOR_PLATE_SET2.png','T4_ARMOR_PLATE_SET3.png','T4_ARMOR_PLATE_UNDEAD.png','T4_ARMOR_PLATE_VALOR.png'];
+const OFF_IMAGES_ARRAY = ['T4_OFF_ASTRAL_AEGIS.png','T4_OFF_BOOK.png','T4_OFF_CELESTIAL_CENSER.png','T4_OFF_DEMONSKULL_HELL.png','T4_OFF_HORN_KEEPER.png','T4_OFF_JESTERCANE_HELL.png','T4_OFF_LAMP_UNDEAD.png','T4_OFF_ORB_MORGANA.png','T4_OFF_SACRED_SCEPTER.png','T4_OFF_SHIELD.png','T4_OFF_SHIELD_HELL.png','T4_OFF_SPIKEDSHIELD_MORGANA.png','T4_OFF_TORCH.png','T4_OFF_TOTEM_KEEPER.png','T4_OFF_TOWERSHIELD_UNDEAD.png'];
+const FOOD_IMAGES_ARRAY = ['T1_MEAL_SOUP@3.png','T1_MEAL_SOUP_FISH@3.png','T2_MEAL_SALAD@2.png','T2_MEAL_SALAD_FISH@2.png','T3_MEAL_AVA_OMELETTE@1.png','T3_MEAL_OMELETTE@1.png','T3_MEAL_OMELETTE_FISH@1.png','T3_MEAL_PIE@1.png','T3_MEAL_PIE_FISH@1.png','T3_MEAL_SOUP@1.png','T3_MEAL_SOUP_FISH@1.png','T4_FISH_FRESHWATER_ALL_COMMON.png','T4_FISH_SALTWATER_ALL_COMMON.png','T4_MEAL_SALAD.png','T4_MEAL_SALAD_FISH.png','T4_MEAL_SANDWICH.png','T4_MEAL_SANDWICH_AVA.png','T4_MEAL_SANDWICH_FISH.png','T4_MEAL_STEW.png','T4_MEAL_STEW_AVA_GOAT.png','T4_MEAL_STEW_FISH.png','UNIQUE_CONSUMABLE_EVENT_EASTER_2020_CHOCOLATE.png'];
+const FEET_IMAGES_ARRAY = ['T4_SHOES_CLOTH_HELL.png','T4_SHOES_CLOTH_KEEPER.png','T4_SHOES_CLOTH_MORGANA.png','T4_SHOES_CLOTH_PUR.png','T4_SHOES_CLOTH_SET1.png','T4_SHOES_CLOTH_SET2.png','T4_SHOES_CLOTH_SET3.png','T4_SHOES_LEATHER_HELL.png','T4_SHOES_LEATHER_MORGANA.png','T4_SHOES_LEATHER_ROYAL.png','T4_SHOES_LEATHER_SET1.png','T4_SHOES_LEATHER_SET2.png','T4_SHOES_LEATHER_SET3.png','T4_SHOES_LEATHER_TENAC.png','T4_SHOES_LEATHER_UNDEAD.png','T4_SHOES_PLATE_HELL.png','T4_SHOES_PLATE_KEEPER.png','T4_SHOES_PLATE_ROYAL.png','T4_SHOES_PLATE_SET1.png','T4_SHOES_PLATE_SET2.png','T4_SHOES_PLATE_SET3.png','T4_SHOES_PLATE_UNDEAD.png','T4_SHOES_PLATE_VALOR.png'];
+const POTS_IMAGES_ARRAY = ['T4_POTION_COOLDOWN.png','T4_POTION_ENERGY.png','T4_POTION_HEAL.png','T4_POTION_SNOWBALL.png'];
+const MOUNT_IMAGES_ARRAY = ['T4_MOUNT_GIANTSTAG.png','T4_MOUNT_HORSE.png','T4_MOUNT_OX.png'];
+
+function getRandomImage(imgAr, path) {
+    var num = Math.floor( Math.random() * imgAr.length );
+    var img = imgAr[ num ];
+    var imgStr = '<img src="' + path + img + '">';
+	if(path.toString().indexOf('_weap') > 0){
+		if(img.toString().indexOf('_MAIN_') > 0){
+			offhand = true;
+		}
+	}
+
+    document.write(imgStr);
+	document.close();
+}
+
+function insertBr(){
+    document.write('<br>');
+	document.close();
+}
+
+function getBag() {
+    getRandomImage(BAG_IMAGES_ARRAY, 'images/0_bag/');
+}
+
+function getHead() {
+    getRandomImage(HEAD_IMAGES_ARRAY, 'images/1_head/');
+}
+
+function getCape() {
+    getRandomImage(CAPE_IMAGES_ARRAY, 'images/2_back/');
+}
+
+function getWeapon() {
+    getRandomImage(WEAP_IMAGES_ARRAY, 'images/3_weapon/');
+}
+
+function getChest() {
+    getRandomImage(CHEST_IMAGES_ARRAY, 'images/4_chest/');
+}
+
+function getOffhand() {
+    getRandomImage(OFF_IMAGES_ARRAY, 'images/5_offhand/');
+}
+
+function getFood() {
+    getRandomImage(FOOD_IMAGES_ARRAY, 'images/6_food/');
+}
+
+function getFeet() {
+    getRandomImage(FEET_IMAGES_ARRAY, 'images/7_feet/');
+}
+
+function getPotions() {
+    getRandomImage(POTS_IMAGES_ARRAY, 'images/8_pots/');
+}
+
+function getMount() {
+    getRandomImage(MOUNT_IMAGES_ARRAY, 'images/9_mount/');
+}
+
+
+function getRandomBuild() {
+	getBag();
+	getHead();
+	getCape();
+	insertBr();
+	getWeapon();
+	getChest();
+	if(offhand == true){
+		getOffhand();
+	}
+	insertBr();
+	getFood();
+	getFeet();
+	getPotions();
+	//insertBr();
+	getMount();
+}
+</script>
+</head>
+<body>
+<div> 
+<h1>Random Generated Albion Online T4 Build: NEW META !!!</h1>
+</div>
+<div>
+    <script type="text/javascript">getRandomBuild()</script>
+</div>
+</body>
+</html>

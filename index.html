@@ -15,6 +15,8 @@ a img { border:none; }
 <script type="text/javascript">
 
 var offhand = false;
+var weaponCopy= '';
+
 const BAG_IMAGES_ARRAY = ['T4_BAG.png','T4_SATCHEL.png'];
 const HEAD_IMAGES_ARRAY = ['T4_HEAD_CLOTH_HELL.png','T4_HEAD_CLOTH_KEEPER.png','T4_HEAD_CLOTH_MORGANA.png','T4_HEAD_CLOTH_PUR.png','T4_HEAD_CLOTH_ROYAL.png','T4_HEAD_CLOTH_SET1.png','T4_HEAD_CLOTH_SET2.png','T4_HEAD_CLOTH_SET3.png','T4_HEAD_LEATHER_HELL.png','T4_HEAD_LEATHER_MORGANA.png','T4_HEAD_LEATHER_ROYAL.png','T4_HEAD_LEATHER_SET1.png','T4_HEAD_LEATHER_SET2.png','T4_HEAD_LEATHER_SET3.png','T4_HEAD_LEATHER_TEN.png','T4_HEAD_LEATHER_UNDEAD.png','T4_HEAD_PLATE_HELL.png','T4_HEAD_PLATE_KEEPER.png','T4_HEAD_PLATE_ROYAL.png','T4_HEAD_PLATE_SET1.png','T4_HEAD_PLATE_SET2.png','T4_HEAD_PLATE_SET3.png','T4_HEAD_PLATE_UNDEAD.png','T4_HEAD_PLATE_VALOR.png'];
 const CAPE_IMAGES_ARRAY = ['T4_CAPE.png','T4_CAPEITEM_DEMON.png','T4_CAPEITEM_FW_BRIDGEWATCH.png','T4_CAPEITEM_FW_FORTSTERLING.png','T4_CAPEITEM_FW_LYMHURST.png','T4_CAPEITEM_FW_MARTLOCK.png','T4_CAPEITEM_FW_THETFORD.png','T4_CAPEITEM_HERETIC.png','T4_CAPEITEM_KEEPER.png','T4_CAPEITEM_MORGANA.png','T4_CAPEITEM_UNDEAD.png'];
@@ -33,6 +35,9 @@ function getRandomImage(imgAr, path) {
 	if(path.toString().indexOf('_weap') > 0){
 		if(img.toString().indexOf('_MAIN_') > 0){
 			offhand = true;
+		} else {
+			//copy the weapon path
+			weaponCopy = path + img ;
 		}
 	}
 
@@ -69,6 +74,12 @@ function getOffhand() {
     getRandomImage(OFF_IMAGES_ARRAY, 'images/5_offhand/');
 }
 
+function copyWeapon() {
+	var imgStr = '<img style="opacity: 0.5;" src="' + weaponCopy + '">';
+	document.write(imgStr);
+	document.close();
+}
+
 function getFood() {
     getRandomImage(FOOD_IMAGES_ARRAY, 'images/6_food/');
 }
@@ -95,6 +106,8 @@ function getRandomBuild() {
 	getChest();
 	if(offhand == true){
 		getOffhand();
+	} else {
+		 copyWeapon();
 	}
 	insertBr();
 	getFood();

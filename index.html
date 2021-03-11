@@ -327,7 +327,6 @@ function soloSetUp(){
 	document.getElementById('5v5Conf').style.display = 'none';
 	document.getElementById('soloConf').style.display = 'block';
 	document.getElementById('settingsCbx').disabled = false;
-	document.getElementById('settingsCbx').disabled = false;
 	document.getElementById('buildIt').innerHTML = "";
 	//cleanSetItUp();
 	document.getElementById('soloBtn').disabled = true;
@@ -349,6 +348,7 @@ function groupSetUp(){
 	document.getElementById('buildIt').innerHTML = "";
 	document.getElementById('groupBtn').disabled = true;
 	document.getElementById('soloBtn').disabled = false;
+	document.getElementById('settingsCbx').disabled = false;
 	document.getElementById('playerNames').innerHTML = "";
 	for(i = 0; i<5; i++){
 		var playerNbr = i+1;

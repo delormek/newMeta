@@ -13,7 +13,7 @@ p { max-width: 60em; }
 a img { border:none; }
 </style>
 <script type="text/javascript">
-const aboutString = 'This tool is free for use Albion Online fan-made site.\n\nRegards\n\n The Gourgandine';
+const ABOUT_STR = 'This tool is free for use Albion Online fan-made site.\n\nRegards\n\nThe Gourgandine';
 // https://stackoverflow.com/questions/1187518/how-to-get-the-difference-between-two-arrays-in-javascript
 function arr_diff (a1, a2) {
     var a = [], diff = [];
@@ -56,23 +56,6 @@ const FOOD_IMAGES_ARRAY = ['T1_MEAL_SOUP@3.png','T1_MEAL_SOUP_FISH@3.png','T2_ME
 const FEET_IMAGES_ARRAY = ['T4_SHOES_CLOTH_HELL.png','T4_SHOES_CLOTH_KEEPER.png','T4_SHOES_CLOTH_MORGANA.png','T4_SHOES_CLOTH_PUR.png','T4_SHOES_CLOTH_SET1.png','T4_SHOES_CLOTH_SET2.png','T4_SHOES_CLOTH_SET3.png','T4_SHOES_LEATHER_HELL.png','T4_SHOES_LEATHER_MORGANA.png','T4_SHOES_LEATHER_ROYAL.png','T4_SHOES_LEATHER_SET1.png','T4_SHOES_LEATHER_SET2.png','T4_SHOES_LEATHER_SET3.png','T4_SHOES_LEATHER_TENAC.png','T4_SHOES_LEATHER_UNDEAD.png','T4_SHOES_PLATE_HELL.png','T4_SHOES_PLATE_KEEPER.png','T4_SHOES_PLATE_ROYAL.png','T4_SHOES_PLATE_SET1.png','T4_SHOES_PLATE_SET2.png','T4_SHOES_PLATE_SET3.png','T4_SHOES_PLATE_UNDEAD.png','T4_SHOES_PLATE_VALOR.png'];
 const POTS_IMAGES_ARRAY = ['T4_POTION_COOLDOWN.png','T4_POTION_ENERGY.png','T4_POTION_HEAL.png','T4_POTION_SNOWBALL.png'];
 const MOUNT_IMAGES_ARRAY = ['T4_MOUNT_GIANTSTAG.png','T4_MOUNT_HORSE.png','T4_MOUNT_OX.png'];
-
-function getRandomImage(imgAr, path) {
-    var num = Math.floor( Math.random() * imgAr.length );
-    var img = imgAr[ num ];
-    var imgStr = '<img src="' + path + img + '">';
-	if(path.toString().indexOf('_weap') > 0){
-		if(img.toString().indexOf('_MAIN_') > 0){
-			offhand = true;
-		} else {
-			//copy the weapon path
-			weaponCopy = path + img ;
-		}
-	}
-
-    document.write(imgStr);
-	document.close();
-}
 
 function getRandomImage(imgAr, path, div) {
     var num = Math.floor( Math.random() * imgAr.length );
@@ -335,6 +318,6 @@ function setItUp(){
 </div>
 </body>
 <footer>
-	<div id="aboutIt"><a href="" onclick="alert(aboutString);">About</a></div>
+	<div id="aboutIt"><a href="" onclick="alert(ABOUT_STR);">About</a></div>
 </footer>
 </html>

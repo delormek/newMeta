@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>Bonobo T4 Generator</title>
+<title>Gourgandine Generator</title>
 <style type="text/css">
 body { font: 14px/1.3 verdana, arial, helvetica, sans-serif; }
 h1 { font-size:1.3em; }
@@ -13,6 +13,29 @@ p { max-width: 60em; }
 a img { border:none; }
 </style>
 <script type="text/javascript">
+// https://stackoverflow.com/questions/1187518/how-to-get-the-difference-between-two-arrays-in-javascript
+function arr_diff (a1, a2) {
+
+    var a = [], diff = [];
+
+    for (var i = 0; i < a1.length; i++) {
+        a[a1[i]] = true;
+    }
+
+    for (var i = 0; i < a2.length; i++) {
+        if (a[a2[i]]) {
+            delete a[a2[i]];
+        } else {
+            a[a2[i]] = true;
+        }
+    }
+
+    for (var k in a) {
+        diff.push(k);
+    }
+
+    return diff;
+}
 
 var offhand = false;
 var weaponCopy= '';
@@ -21,7 +44,13 @@ const BAG_IMAGES_ARRAY = ['T4_BAG.png','T4_SATCHEL.png'];
 const HEAD_IMAGES_ARRAY = ['T4_HEAD_CLOTH_HELL.png','T4_HEAD_CLOTH_KEEPER.png','T4_HEAD_CLOTH_MORGANA.png','T4_HEAD_CLOTH_PUR.png','T4_HEAD_CLOTH_ROYAL.png','T4_HEAD_CLOTH_SET1.png','T4_HEAD_CLOTH_SET2.png','T4_HEAD_CLOTH_SET3.png','T4_HEAD_LEATHER_HELL.png','T4_HEAD_LEATHER_MORGANA.png','T4_HEAD_LEATHER_ROYAL.png','T4_HEAD_LEATHER_SET1.png','T4_HEAD_LEATHER_SET2.png','T4_HEAD_LEATHER_SET3.png','T4_HEAD_LEATHER_TEN.png','T4_HEAD_LEATHER_UNDEAD.png','T4_HEAD_PLATE_HELL.png','T4_HEAD_PLATE_KEEPER.png','T4_HEAD_PLATE_ROYAL.png','T4_HEAD_PLATE_SET1.png','T4_HEAD_PLATE_SET2.png','T4_HEAD_PLATE_SET3.png','T4_HEAD_PLATE_UNDEAD.png','T4_HEAD_PLATE_VALOR.png'];
 const CAPE_IMAGES_ARRAY = ['T4_CAPE.png','T4_CAPEITEM_DEMON.png','T4_CAPEITEM_FW_BRIDGEWATCH.png','T4_CAPEITEM_FW_FORTSTERLING.png','T4_CAPEITEM_FW_LYMHURST.png','T4_CAPEITEM_FW_MARTLOCK.png','T4_CAPEITEM_FW_THETFORD.png','T4_CAPEITEM_HERETIC.png','T4_CAPEITEM_KEEPER.png','T4_CAPEITEM_MORGANA.png','T4_CAPEITEM_UNDEAD.png'];
 const WEAP_IMAGES_ARRAY = ['T4_2H_ARCANESTAFF.png','T4_2H_ARCANESTAFF_HELL.png','T4_2H_AXE.png','T4_2H_BOW.png','T4_2H_BOW_HELL.png','T4_2H_BOW_KEEPER.png','T4_2H_BRIDLED_FURY.png','T4_2H_CLAWPAIR.png','T4_2H_CLAYMORE.png','T4_2H_CLEAVER_HELL.png','T4_2H_COMBATSTAFF_MORGANA.png','T4_2H_CROSSBOW.png','T4_2H_CROSSBOWLARGE.png','T4_2H_CROSSBOWLARGE_MORGANA.png','T4_2H_CURSEDSTAFF.png','T4_2H_CURSEDSTAFF_MORGANA.png','T4_2H_DAGGERPAIR.png','T4_2H_DAWNSONG.png','T4_2H_DEMONICSTAFF.png','T4_2H_DIVINESTAFF.png','T4_2H_DOUBLEBLADEDSTAFF.png','T4_2H_DUALAXE_KEEPER.png','T4_2H_DUALCROSSBOW_HELL.png','T4_2H_DUALHAMMER_HELL.png','T4_2H_DUALSCIMITAR_UNDEAD.png','T4_2H_DUALSICKLE_UNDEAD.png','T4_2H_DUALSWORD.png','T4_2H_ENERGY_SHAPER.png','T4_2H_ENIGMATICORB_MORGANA.png','T4_2H_ENIGMATICSTAFF.png','T4_2H_EVENSONG.png','T4_2H_FIRESTAFF.png','T4_2H_FIRESTAFF_HELL.png','T4_2H_FLAIL.png','T4_2H_FROSTSTAFF.png','T4_2H_GLACIALSTAFF.png','T4_2H_GLAIVE.png','T4_2H_GRAILSEEKER.png','T4_2H_HALBERD.png','T4_2H_HALBERD_MORGANA.png','T4_2H_HAMMER.png','T4_2H_HAMMER_UNDEAD.png','T4_2H_HAND_OF_JUSTICE.png','T4_2H_HARPOON_HELL.png','T4_2H_HOLYSTAFF.png','T4_2H_HOLYSTAFF_HELL.png','T4_2H_HOLYSTAFF_UNDEAD.png','T4_2H_ICECRYSTAL_UNDEAD.png','T4_2H_ICEGAUNTLETS_HELL.png','T4_2H_INFERNOSTAFF.png','T4_2H_INFERNOSTAFF_MORGANA.png','T4_2H_IRONCLADEDSTAFF.png','T4_2H_IRONGAUNTLETS_HELL.png','T4_2H_KINGMAKER.png','T4_2H_LONGBOW.png','T4_2H_LONGBOW_UNDEAD.png','T4_2H_MACE.png','T4_2H_MACE_MORGANA.png','T4_2H_MISTPIERCER.png','T4_2H_NATURESTAFF.png','T4_2H_NATURESTAFF_HELL.png','T4_2H_NATURESTAFF_KEEPER.png','T4_2H_OATHKEEPERS.png','T4_2H_POLEHAMMER.png','T4_2H_QUARTERSTAFF.png','T4_2H_RAM_KEEPER.png','T4_2H_REALMBREAKER.png','T4_2H_REPEATINGCROSSBOW_UNDEAD.png','T4_2H_ROCKSTAFF_KEEPER.png','T4_2H_SCYTHE_HELL.png','T4_2H_SKULLORB_HELL.png','T4_2H_SPEAR.png','T4_2H_TRIDENT_UNDEAD.png','T4_2H_TWINSCYTHE_HELL.png','T4_2H_WARBOW.png','T4_2H_WILDSTAFF.png','T4_MAIN_1HCROSSBOW.png','T4_MAIN_ARCANESTAFF.png','T4_MAIN_ARCANESTAFF_UNDEAD.png','T4_MAIN_AXE.png','T4_MAIN_CHILLHOWL.png','T4_MAIN_CURSEDSTAFF.png','T4_MAIN_CURSEDSTAFF_UNDEAD.png','T4_MAIN_DAGGER.png','T4_MAIN_DAYBREAKER.png','T4_MAIN_FIRESTAFF.png','T4_MAIN_FIRESTAFF_KEEPER.png','T4_MAIN_FROSTSTAFF.png','T4_MAIN_FROSTSTAFF_KEEPER.png','T4_MAIN_HALLOWFALL.png','T4_MAIN_HAMMER.png','T4_MAIN_HOLYSTAFF.png','T4_MAIN_HOLYSTAFF_MORGANA.png','T4_MAIN_IRONROOT.png','T4_MAIN_MACE.png','T4_MAIN_MACE_HELL.png','T4_MAIN_NATURESTAFF.png','T4_MAIN_NATURESTAFF_KEEPER.png','T4_MAIN_RAPIER_MORGANA.png','T4_MAIN_ROCKMACE_KEEPER.png','T4_MAIN_SCIMITAR_MORGANA.png','T4_MAIN_SHADOWCALLER.png','T4_MAIN_SPEAR.png','T4_MAIN_SPEAR_KEEPER.png','T4_MAIN_SWORD.png'];
+const HEALWEAP_IMAGES_ARRAY = ['T4_2H_HOLYSTAFF_UNDEAD.png','T4_2H_HOLYSTAFF.png','T4_2H_HOLYSTAFF_HELL.png','T4_2H_NATURESTAFF.png','T4_2H_NATURESTAFF_HELL.png','T4_2H_NATURESTAFF_KEEPER.png','T4_2H_WILDSTAFF.png','T4_MAIN_HALLOWFALL.png','T4_MAIN_HOLYSTAFF.png','T4_MAIN_HOLYSTAFF_MORGANA.png','T4_MAIN_IRONROOT.png','T4_MAIN_NATURESTAFF.png','T4_MAIN_NATURESTAFF_KEEPER.png','T4_2H_DIVINESTAFF.png'];
+const TANKWEAP_IMAGES_ARRAY = ['T4_2H_COMBATSTAFF_MORGANA.png','T4_2H_DOUBLEBLADEDSTAFF.png','T4_2H_DUALHAMMER_HELL.png','T4_2H_FLAIL.png','T4_2H_GRAILSEEKER.png','T4_2H_HAMMER.png','T4_2H_HAMMER_UNDEAD.png','T4_2H_HAND_OF_JUSTICE.png','T4_2H_IRONCLADEDSTAFF.png','T4_2H_MACE.png','T4_2H_MACE_MORGANA.png','T4_2H_OATHKEEPERS.png','T4_2H_POLEHAMMER.png','T4_2H_QUARTERSTAFF.png','T4_2H_RAM_KEEPER.png','T4_2H_ROCKSTAFF_KEEPER.png','T4_2H_TWINSCYTHE_HELL.png','T4_MAIN_HAMMER.png','T4_MAIN_MACE.png','T4_MAIN_MACE_HELL.png','T4_MAIN_ROCKMACE_KEEPER.png'];
+var DMGWEAP_IMAGES_ARRAY = arr_diff(HEALWEAP_IMAGES_ARRAY,WEAP_IMAGES_ARRAY);
+DMGWEAP_IMAGES_ARRAY = arr_diff(TANKWEAP_IMAGES_ARRAY,DMGWEAP_IMAGES_ARRAY);
 const CHEST_IMAGES_ARRAY = ['T4_ARMOR_CLOTH_HELL.png','T4_ARMOR_CLOTH_KEEPER.png','T4_ARMOR_CLOTH_MORGANA.png','T4_ARMOR_CLOTH_PUR.png','T4_ARMOR_CLOTH_ROYAL.png','T4_ARMOR_CLOTH_SET1.png','T4_ARMOR_CLOTH_SET2.png','T4_ARMOR_CLOTH_SET3.png','T4_ARMOR_LEATHER_HELL.png','T4_ARMOR_LEATHER_MORGANA.png','T4_ARMOR_LEATHER_ROYAL.png','T4_ARMOR_LEATHER_SET1.png','T4_ARMOR_LEATHER_SET2.png','T4_ARMOR_LEATHER_SET3.png','T4_ARMOR_LEATHER_TEN.png','T4_ARMOR_LEATHER_UNDEAD.png','T4_ARMOR_PLATE_HELL.png','T4_ARMOR_PLATE_KEEPER.png','T4_ARMOR_PLATE_ROYAL.png','T4_ARMOR_PLATE_SET1.png','T4_ARMOR_PLATE_SET2.png','T4_ARMOR_PLATE_SET3.png','T4_ARMOR_PLATE_UNDEAD.png','T4_ARMOR_PLATE_VALOR.png'];
+const HEALCHEST_IMAGES_ARRAY = ['T4_ARMOR_CLOTH_KEEPER.png','T4_ARMOR_CLOTH_MORGANA.png','T4_ARMOR_CLOTH_PUR.png','T4_ARMOR_CLOTH_ROYAL.png','T4_ARMOR_CLOTH_SET1.png','T4_ARMOR_CLOTH_SET2.png','T4_ARMOR_CLOTH_SET3.png'];
+const TANKCHEST_IMAGES_ARRAY = ['T4_ARMOR_CLOTH_HELL.png','T4_ARMOR_PLATE_HELL.png','T4_ARMOR_PLATE_ROYAL.png','T4_ARMOR_PLATE_SET1.png','T4_ARMOR_PLATE_SET2.png','T4_ARMOR_PLATE_SET3.png','T4_ARMOR_PLATE_UNDEAD.png','T4_ARMOR_PLATE_VALOR.png'];
 const OFF_IMAGES_ARRAY = ['T4_OFF_ASTRAL_AEGIS.png','T4_OFF_BOOK.png','T4_OFF_CELESTIAL_CENSER.png','T4_OFF_DEMONSKULL_HELL.png','T4_OFF_HORN_KEEPER.png','T4_OFF_JESTERCANE_HELL.png','T4_OFF_LAMP_UNDEAD.png','T4_OFF_ORB_MORGANA.png','T4_OFF_SACRED_SCEPTER.png','T4_OFF_SHIELD.png','T4_OFF_SHIELD_HELL.png','T4_OFF_SPIKEDSHIELD_MORGANA.png','T4_OFF_TORCH.png','T4_OFF_TOTEM_KEEPER.png','T4_OFF_TOWERSHIELD_UNDEAD.png'];
 const FOOD_IMAGES_ARRAY = ['T1_MEAL_SOUP@3.png','T1_MEAL_SOUP_FISH@3.png','T2_MEAL_SALAD@2.png','T2_MEAL_SALAD_FISH@2.png','T3_MEAL_AVA_OMELETTE@1.png','T3_MEAL_OMELETTE@1.png','T3_MEAL_OMELETTE_FISH@1.png','T3_MEAL_PIE@1.png','T3_MEAL_PIE_FISH@1.png','T3_MEAL_SOUP@1.png','T3_MEAL_SOUP_FISH@1.png','T4_FISH_FRESHWATER_ALL_COMMON.png','T4_FISH_SALTWATER_ALL_COMMON.png','T4_MEAL_SALAD.png','T4_MEAL_SALAD_FISH.png','T4_MEAL_SANDWICH.png','T4_MEAL_SANDWICH_AVA.png','T4_MEAL_SANDWICH_FISH.png','T4_MEAL_STEW.png','T4_MEAL_STEW_AVA_GOAT.png','T4_MEAL_STEW_FISH.png','UNIQUE_CONSUMABLE_EVENT_EASTER_2020_CHOCOLATE.png'];
 const FEET_IMAGES_ARRAY = ['T4_SHOES_CLOTH_HELL.png','T4_SHOES_CLOTH_KEEPER.png','T4_SHOES_CLOTH_MORGANA.png','T4_SHOES_CLOTH_PUR.png','T4_SHOES_CLOTH_SET1.png','T4_SHOES_CLOTH_SET2.png','T4_SHOES_CLOTH_SET3.png','T4_SHOES_LEATHER_HELL.png','T4_SHOES_LEATHER_MORGANA.png','T4_SHOES_LEATHER_ROYAL.png','T4_SHOES_LEATHER_SET1.png','T4_SHOES_LEATHER_SET2.png','T4_SHOES_LEATHER_SET3.png','T4_SHOES_LEATHER_TENAC.png','T4_SHOES_LEATHER_UNDEAD.png','T4_SHOES_PLATE_HELL.png','T4_SHOES_PLATE_KEEPER.png','T4_SHOES_PLATE_ROYAL.png','T4_SHOES_PLATE_SET1.png','T4_SHOES_PLATE_SET2.png','T4_SHOES_PLATE_SET3.png','T4_SHOES_PLATE_UNDEAD.png','T4_SHOES_PLATE_VALOR.png'];
@@ -45,33 +74,99 @@ function getRandomImage(imgAr, path) {
 	document.close();
 }
 
+function getRandomImage(imgAr, path, div) {
+    var num = Math.floor( Math.random() * imgAr.length );
+    var img = imgAr[ num ];
+	var imgStr = '<img width="128" height="128" src="' + path + img + '">';
+    //var imgStr = '<img src="' + path + img + '">';
+	if(path.toString().indexOf('_weap') > 0){
+		if(img.toString().indexOf('_MAIN_') > 0){
+			offhand = true;
+		} else {
+			//copy the weapon path
+			weaponCopy = path + img ;
+		}
+	}
+
+    document.getElementById(div).innerHTML += imgStr;
+}
+
 function insertBr(){
     document.write('<br>');
 	document.close();
+}
+
+function insertBr(div){
+	document.getElementById(div).innerHTML += '<br>';
 }
 
 function getBag() {
     getRandomImage(BAG_IMAGES_ARRAY, 'images/0_bag/');
 }
 
+function getBag(div) {
+    getRandomImage(BAG_IMAGES_ARRAY, 'images/0_bag/', div);
+}
+
 function getHead() {
     getRandomImage(HEAD_IMAGES_ARRAY, 'images/1_head/');
+}
+
+function getHead(div) {
+    getRandomImage(HEAD_IMAGES_ARRAY, 'images/1_head/', div);
 }
 
 function getCape() {
     getRandomImage(CAPE_IMAGES_ARRAY, 'images/2_back/');
 }
 
+function getCape(div) {
+    getRandomImage(CAPE_IMAGES_ARRAY, 'images/2_back/', div);
+}
+
 function getWeapon() {
     getRandomImage(WEAP_IMAGES_ARRAY, 'images/3_weapon/');
+}
+
+function getWeapon(div) {
+    getRandomImage(WEAP_IMAGES_ARRAY, 'images/3_weapon/', div);
+}
+
+function getTankWeapon(div) {
+    getRandomImage(TANKWEAP_IMAGES_ARRAY, 'images/3_weapon/', div);
+}
+
+function getHealerWeapon(div) {
+    getRandomImage(HEALWEAP_IMAGES_ARRAY, 'images/3_weapon/', div);
+}
+
+function getDPSWeapon(div) {
+    getRandomImage(DMGWEAP_IMAGES_ARRAY, 'images/3_weapon/', div);
 }
 
 function getChest() {
     getRandomImage(CHEST_IMAGES_ARRAY, 'images/4_chest/');
 }
 
+function getTankChest(div) {
+    getRandomImage(TANKCHEST_IMAGES_ARRAY, 'images/4_chest/', div);
+}
+
+function getHealerChest(div) {
+    getRandomImage(HEALCHEST_IMAGES_ARRAY, 'images/4_chest/', div);
+}
+
+
+function getChest(div) {
+    getRandomImage(CHEST_IMAGES_ARRAY, 'images/4_chest/', div);
+}
+
 function getOffhand() {
     getRandomImage(OFF_IMAGES_ARRAY, 'images/5_offhand/');
+}
+
+function getOffhand(div) {
+    getRandomImage(OFF_IMAGES_ARRAY, 'images/5_offhand/', div);
 }
 
 function copyWeapon() {
@@ -80,22 +175,46 @@ function copyWeapon() {
 	document.close();
 }
 
+function copyWeapon(div) {
+	var imgStr = '<img width="128" height="128" style="opacity: 0.5;" src="' + weaponCopy + '">';
+	document.getElementById(div).innerHTML += imgStr;
+}
+
 function getFood() {
     getRandomImage(FOOD_IMAGES_ARRAY, 'images/6_food/');
+}
+
+function getFood(div) {
+    getRandomImage(FOOD_IMAGES_ARRAY, 'images/6_food/', div);
 }
 
 function getFeet() {
     getRandomImage(FEET_IMAGES_ARRAY, 'images/7_feet/');
 }
 
+function getFeet(div) {
+    getRandomImage(FEET_IMAGES_ARRAY, 'images/7_feet/', div);
+}
+
 function getPotions() {
     getRandomImage(POTS_IMAGES_ARRAY, 'images/8_pots/');
+}
+
+function getPotions(div) {
+    getRandomImage(POTS_IMAGES_ARRAY, 'images/8_pots/', div);
 }
 
 function getMount() {
     getRandomImage(MOUNT_IMAGES_ARRAY, 'images/9_mount/');
 }
 
+function getMount(div) {
+    getRandomImage(MOUNT_IMAGES_ARRAY, 'images/9_mount/', div);
+}
+
+function cleanBuildItDiv() {
+    document.getElementById('buildIt').innerHTML = "";
+}
 
 function getRandomBuild() {
 	getBag();
@@ -116,15 +235,183 @@ function getRandomBuild() {
 	//insertBr();
 	getMount();
 }
+
+function getRandom5V5TankBuild(playerId) {
+	offhand = false;
+	getHead('buildIt');
+	getCape('buildIt');
+	getTankWeapon('buildIt');
+	getTankChest('buildIt');
+	if(offhand == true){
+		getOffhand('buildIt');
+	} else {
+		 copyWeapon('buildIt');
+	}
+	getFeet('buildIt');
+	
+	var playerStr = ' ' + document.getElementById('player'+playerId).value;
+	document.getElementById('buildIt').innerHTML += playerStr;
+
+	insertBr('buildIt');
+	
+}
+
+function getRandom5V5HealBuild(playerId) {
+	offhand = false;
+	getHead('buildIt');
+	getCape('buildIt');
+	getHealerWeapon('buildIt');
+	getHealerChest('buildIt');
+	if(offhand == true){
+		getOffhand('buildIt');
+	} else {
+		 copyWeapon('buildIt');
+	}
+	getFeet('buildIt');
+	
+	var playerStr = ' ' + document.getElementById('player'+playerId).value;
+	document.getElementById('buildIt').innerHTML += playerStr;
+
+	insertBr('buildIt');
+	
+}
+
+function getRandom5V5DPSBuild(playerId) {
+	offhand = false;
+	getHead('buildIt');
+	getCape('buildIt');
+	getDPSWeapon('buildIt');
+	getChest('buildIt');
+	if(offhand == true){
+		getOffhand('buildIt');
+	} else {
+		 copyWeapon('buildIt');
+	}
+	
+	getFeet('buildIt');
+
+	var playerStr = ' ' + document.getElementById('player'+playerId).value;
+	document.getElementById('buildIt').innerHTML += playerStr;
+	
+	insertBr('buildIt');
+	
+	
+	
+	
+}
+
+function getRandom5V5Comp() {
+	document.getElementById('buildIt').innerHTML = "";
+	var playerTypesArray = ['tank', 'heal', 'dps', 'dps', 'support'];
+	
+	//if(goFullRandom==true)getRandom5V5Build
+	
+	var tankId = Math.floor( Math.random() * 5) + 1;
+	var healerId = Math.floor( Math.random() * 5) + 1;
+	while(tankId==healerId){
+		healerId = Math.floor( Math.random() * 5) + 1;
+	}
+	
+	var dps_arr = arr_diff([tankId, healerId],[1, 2, 3, 4, 5]);
+	
+	getRandom5V5TankBuild(tankId);
+	getRandom5V5HealBuild(healerId);
+	//getRandom5V5Build(tankId, 'tank');
+	//getRandom5V5Build(healerId, 'heal');
+	
+		for(i = 0; i<dps_arr.length; i++){
+			getRandom5V5DPSBuild(dps_arr[i]);
+			//getRandom5V5Build(dps_arr[i], 'dps');
+				
+		}
+}
+
+function getRandomBuild(isSolo) {
+	offhand = false;
+	if(isSolo) {
+		document.getElementById('soloPlayer').disabled = true;
+		cleanBuildItDiv();
+		getBag('buildIt');
+		getHead('buildIt');
+		getCape('buildIt');
+		insertBr('buildIt');
+		getWeapon('buildIt');
+		getChest('buildIt');
+		if(offhand == true){
+			getOffhand('buildIt');
+		} else {
+			copyWeapon('buildIt');
+		}
+		insertBr('buildIt');
+		getFood('buildIt');
+		getFeet('buildIt');
+		getPotions('buildIt');
+		//insertBr();
+		getMount('buildIt');
+	
+	}
+}
+
+function cleanSetItUp(){
+	document.getElementById('setItUp').innerHTML = "";
+	document.getElementById('setItUp').remove();
+}
+
+function soloSetUp(){
+	document.getElementById('buildIt').innerHTML = "";
+	//cleanSetItUp();
+	document.getElementById('soloBtn').disabled = true;
+	document.getElementById('groupBtn').disabled = false;
+	document.getElementById('playerNames').innerHTML = "";
+	var soloConfStr = "";
+	var playerStr = '<input type="text" id="soloPlayer" value="Character name">';
+	var rollItBtnStr = '<input type="button" id="soloRollBtn" value="Roll" onclick="getRandomBuild(true);">';
+	document.getElementById('playerNames').innerHTML += playerStr + rollItBtnStr;
+	
+}
+
+function groupSetUp(){
+	document.getElementById('buildIt').innerHTML = "";
+	document.getElementById('groupBtn').disabled = true;
+	document.getElementById('soloBtn').disabled = false;
+	document.getElementById('playerNames').innerHTML = "";
+	for(i = 0; i<5; i++){
+		var playerNbr = i+1;
+		var playerStr = '<input type="text" id="player' + playerNbr + '" value="Player#' + playerNbr + '">';
+		document.getElementById('playerNames').innerHTML += playerStr;
+	}
+	var rollItBtnStr = '<input type="button" id="groupRollBtn" value="Roll" onclick="getRandom5V5Comp();">';
+	document.getElementById('playerNames').innerHTML += rollItBtnStr;
+	
+}
+
+function setItUp(){
+	//Solo Btn
+	var soloBtnStr = '<input type="button" id="soloBtn" value="Go Solo" onclick="soloSetUp();">';
+	//5v5 Btn
+	var groupBtnStr = '<input type="button" id="groupBtn" value="Go 5V5" onclick="groupSetUp();">';
+	document.getElementById('setItUp').innerHTML = soloBtnStr + groupBtnStr;
+}
 </script>
 </head>
 <body>
 <div> 
-<h1>Random Generated Albion Online T4 Build: NEW META !!!</h1>
-<h6>Hep ! Wanna try it for 5V5 ? It's <a href="https://gourgandine.github.io/new5V5Meta/">here</a></h6>
+<h1>Random Generated Albion Online Builds: NEW META ?</h1>
 </div>
 <div>
-    <script type="text/javascript">getRandomBuild()</script>
+    <!-- <script type="text/javascript">getRandomBuild()</script> -->
+	<div id="setItUp" style="inline-block"><script type="text/javascript">setItUp();</script></div>
+	<div id="playerNames"></div>
+	<div id="configureIt">
+		<div id="soloConf"></div>
+		<div id="5v5Conf"></div>
+	</div>
+	<div id="buildIt"></div>
+	<div id="analyzeIt">
+	</div>	
 </div>
 </body>
+<footer>
+	<div id="aboutIt"><a href="" onclick="alert('ABOUT');">About</a></div>
+</footer>
 </html>

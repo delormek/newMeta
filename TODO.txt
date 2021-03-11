@@ -1,0 +1,34 @@
+Police car AO Website.
+Bckgrnd Colour.
+
+init div
+Character Name
+btn solo btn 5v5
+Statistics chkbx
+restart btn
+
+
+config div
+	All spells and passives
+	Trollitems (crafting food etc)
+	To the moon (T4 to t8.3)
+	
+	solo
+		Mount
+		Foods and pots
+
+	5v5
+		fullRandom
+		exclusive
+
+buildDiv
+
+statistics div
+	trys nbr
+	Weapon
+	
+	
+
+
+Footer
+About alert: Fanpage,free for use, all uset images/assets are property of SandBox Interactive etc.

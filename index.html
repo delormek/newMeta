@@ -13,11 +13,11 @@ p { max-width: 60em; }
 a img { border:none; }
 </style>
 <script type="text/javascript">
+const aboutString = 'This tool is free for use Albion Online fan-made site.\n\nRegards\n\n The Gourgandine';
 // https://stackoverflow.com/questions/1187518/how-to-get-the-difference-between-two-arrays-in-javascript
 function arr_diff (a1, a2) {
-
     var a = [], diff = [];
-
+	
     for (var i = 0; i < a1.length; i++) {
         a[a1[i]] = true;
     }
@@ -91,41 +91,20 @@ function getRandomImage(imgAr, path, div) {
     document.getElementById(div).innerHTML += imgStr;
 }
 
-function insertBr(){
-    document.write('<br>');
-	document.close();
-}
-
 function insertBr(div){
 	document.getElementById(div).innerHTML += '<br>';
-}
-
-function getBag() {
-    getRandomImage(BAG_IMAGES_ARRAY, 'images/0_bag/');
 }
 
 function getBag(div) {
     getRandomImage(BAG_IMAGES_ARRAY, 'images/0_bag/', div);
 }
 
-function getHead() {
-    getRandomImage(HEAD_IMAGES_ARRAY, 'images/1_head/');
-}
-
 function getHead(div) {
     getRandomImage(HEAD_IMAGES_ARRAY, 'images/1_head/', div);
 }
 
-function getCape() {
-    getRandomImage(CAPE_IMAGES_ARRAY, 'images/2_back/');
-}
-
 function getCape(div) {
     getRandomImage(CAPE_IMAGES_ARRAY, 'images/2_back/', div);
-}
-
-function getWeapon() {
-    getRandomImage(WEAP_IMAGES_ARRAY, 'images/3_weapon/');
 }
 
 function getWeapon(div) {
@@ -144,9 +123,6 @@ function getDPSWeapon(div) {
     getRandomImage(DMGWEAP_IMAGES_ARRAY, 'images/3_weapon/', div);
 }
 
-function getChest() {
-    getRandomImage(CHEST_IMAGES_ARRAY, 'images/4_chest/');
-}
 
 function getTankChest(div) {
     getRandomImage(TANKCHEST_IMAGES_ARRAY, 'images/4_chest/', div);
@@ -156,23 +132,12 @@ function getHealerChest(div) {
     getRandomImage(HEALCHEST_IMAGES_ARRAY, 'images/4_chest/', div);
 }
 
-
 function getChest(div) {
     getRandomImage(CHEST_IMAGES_ARRAY, 'images/4_chest/', div);
 }
 
-function getOffhand() {
-    getRandomImage(OFF_IMAGES_ARRAY, 'images/5_offhand/');
-}
-
 function getOffhand(div) {
     getRandomImage(OFF_IMAGES_ARRAY, 'images/5_offhand/', div);
-}
-
-function copyWeapon() {
-	var imgStr = '<img style="opacity: 0.5;" src="' + weaponCopy + '">';
-	document.write(imgStr);
-	document.close();
 }
 
 function copyWeapon(div) {
@@ -180,32 +145,16 @@ function copyWeapon(div) {
 	document.getElementById(div).innerHTML += imgStr;
 }
 
-function getFood() {
-    getRandomImage(FOOD_IMAGES_ARRAY, 'images/6_food/');
-}
-
 function getFood(div) {
     getRandomImage(FOOD_IMAGES_ARRAY, 'images/6_food/', div);
-}
-
-function getFeet() {
-    getRandomImage(FEET_IMAGES_ARRAY, 'images/7_feet/');
 }
 
 function getFeet(div) {
     getRandomImage(FEET_IMAGES_ARRAY, 'images/7_feet/', div);
 }
 
-function getPotions() {
-    getRandomImage(POTS_IMAGES_ARRAY, 'images/8_pots/');
-}
-
 function getPotions(div) {
     getRandomImage(POTS_IMAGES_ARRAY, 'images/8_pots/', div);
-}
-
-function getMount() {
-    getRandomImage(MOUNT_IMAGES_ARRAY, 'images/9_mount/');
 }
 
 function getMount(div) {
@@ -214,26 +163,6 @@ function getMount(div) {
 
 function cleanBuildItDiv() {
     document.getElementById('buildIt').innerHTML = "";
-}
-
-function getRandomBuild() {
-	getBag();
-	getHead();
-	getCape();
-	insertBr();
-	getWeapon();
-	getChest();
-	if(offhand == true){
-		getOffhand();
-	} else {
-		 copyWeapon();
-	}
-	insertBr();
-	getFood();
-	getFeet();
-	getPotions();
-	//insertBr();
-	getMount();
 }
 
 function getRandom5V5TankBuild(playerId) {
@@ -253,7 +182,6 @@ function getRandom5V5TankBuild(playerId) {
 	document.getElementById('buildIt').innerHTML += playerStr;
 
 	insertBr('buildIt');
-	
 }
 
 function getRandom5V5HealBuild(playerId) {
@@ -273,7 +201,6 @@ function getRandom5V5HealBuild(playerId) {
 	document.getElementById('buildIt').innerHTML += playerStr;
 
 	insertBr('buildIt');
-	
 }
 
 function getRandom5V5DPSBuild(playerId) {
@@ -294,10 +221,6 @@ function getRandom5V5DPSBuild(playerId) {
 	document.getElementById('buildIt').innerHTML += playerStr;
 	
 	insertBr('buildIt');
-	
-	
-	
-	
 }
 
 function getRandom5V5Comp() {
@@ -412,6 +335,6 @@ function setItUp(){
 </div>
 </body>
 <footer>
-	<div id="aboutIt"><a href="" onclick="alert('ABOUT');">About</a></div>
+	<div id="aboutIt"><a href="" onclick="alert(aboutString);">About</a></div>
 </footer>
 </html>

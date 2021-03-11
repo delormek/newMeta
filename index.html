@@ -39,6 +39,7 @@ function arr_diff (a1, a2) {
 
 var offhand = false;
 var weaponCopy= '';
+var tryCount = 0;
 
 const BAG_IMAGES_ARRAY = ['T4_BAG.png','T4_SATCHEL.png'];
 const HEAD_IMAGES_ARRAY = ['T4_HEAD_CLOTH_HELL.png','T4_HEAD_CLOTH_KEEPER.png','T4_HEAD_CLOTH_MORGANA.png','T4_HEAD_CLOTH_PUR.png','T4_HEAD_CLOTH_ROYAL.png','T4_HEAD_CLOTH_SET1.png','T4_HEAD_CLOTH_SET2.png','T4_HEAD_CLOTH_SET3.png','T4_HEAD_LEATHER_HELL.png','T4_HEAD_LEATHER_MORGANA.png','T4_HEAD_LEATHER_ROYAL.png','T4_HEAD_LEATHER_SET1.png','T4_HEAD_LEATHER_SET2.png','T4_HEAD_LEATHER_SET3.png','T4_HEAD_LEATHER_TEN.png','T4_HEAD_LEATHER_UNDEAD.png','T4_HEAD_PLATE_HELL.png','T4_HEAD_PLATE_KEEPER.png','T4_HEAD_PLATE_ROYAL.png','T4_HEAD_PLATE_SET1.png','T4_HEAD_PLATE_SET2.png','T4_HEAD_PLATE_SET3.png','T4_HEAD_PLATE_UNDEAD.png','T4_HEAD_PLATE_VALOR.png'];
@@ -207,6 +208,8 @@ function getRandom5V5DPSBuild(playerId) {
 }
 
 function getRandom5V5Comp() {
+	tryCount++;
+	document.getElementById("tryCount").value = "Try #" + tryCount;
 	document.getElementById('buildIt').innerHTML = "";
 	var playerTypesArray = ['tank', 'heal', 'dps', 'dps', 'support'];
 	
@@ -235,6 +238,8 @@ function getRandom5V5Comp() {
 function getRandomBuild(isSolo) {
 	offhand = false;
 	if(isSolo) {
+		tryCount++;
+		document.getElementById("tryCount").value = "Try #" + tryCount;
 		document.getElementById('soloPlayer').disabled = true;
 		cleanBuildItDiv();
 		getBag('buildIt');
@@ -264,6 +269,7 @@ function cleanSetItUp(){
 }
 
 function soloSetUp(){
+	tryCount = 0;
 	document.getElementById('buildIt').innerHTML = "";
 	//cleanSetItUp();
 	document.getElementById('soloBtn').disabled = true;
@@ -272,11 +278,13 @@ function soloSetUp(){
 	var soloConfStr = "";
 	var playerStr = '<input type="text" id="soloPlayer" value="Character name">';
 	var rollItBtnStr = '<input type="button" id="soloRollBtn" value="Roll" onclick="getRandomBuild(true);">';
-	document.getElementById('playerNames').innerHTML += playerStr + rollItBtnStr;
+	var tryCountStr = '<input type="text" id="tryCount" disabled>';
+	document.getElementById('playerNames').innerHTML += playerStr + rollItBtnStr + tryCountStr;
 	
 }
 
 function groupSetUp(){
+	tryCount = 0;
 	document.getElementById('buildIt').innerHTML = "";
 	document.getElementById('groupBtn').disabled = true;
 	document.getElementById('soloBtn').disabled = false;
@@ -287,7 +295,8 @@ function groupSetUp(){
 		document.getElementById('playerNames').innerHTML += playerStr;
 	}
 	var rollItBtnStr = '<input type="button" id="groupRollBtn" value="Roll" onclick="getRandom5V5Comp();">';
-	document.getElementById('playerNames').innerHTML += rollItBtnStr;
+	var tryCountStr = '<input type="text" id="tryCount" disabled>';
+	document.getElementById('playerNames').innerHTML += rollItBtnStr + tryCountStr;
 	
 }
 

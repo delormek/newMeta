@@ -2,8 +2,9 @@ Police car AO Website.
 Bckgrnd Colour.
 
 init div
-Character Name
+
 btn solo btn 5v5
+Character Name
 Statistics chkbx
 restart btn
 

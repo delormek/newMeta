@@ -207,8 +207,41 @@ function getRandom5V5DPSBuild(playerId) {
 	insertBr('buildIt');
 }
 
+function lockGroupSettings() {
+	document.getElementById('noFlatCapeCbx').disabled = true;
+	document.getElementById('allSpellsGrpCbx').disabled = true;
+	document.getElementById('exclusiveModeCbx').disabled = true;
+	document.getElementById('fullRandomCbx').disabled = true;
+
+}
+
+function lockSoloSettings() {
+	document.getElementById('trollItemsCbx').disabled = true;
+	document.getElementById('allSpellsCbx').disabled = true;
+	document.getElementById('allFoodNPotsCbx').disabled = true;
+	document.getElementById('mountNBagCbx').disabled = true;
+	document.getElementById('feedToTheMoonCbx').disabled = true;
+}
+
+function unlockGroupSettings() {
+	document.getElementById('noFlatCapeCbx').disabled = false;
+	document.getElementById('allSpellsGrpCbx').disabled = false;
+	document.getElementById('exclusiveModeCbx').disabled = false;
+	document.getElementById('fullRandomCbx').disabled = false;
+
+}
+
+function unlockSoloSettings() {
+	document.getElementById('trollItemsCbx').disabled = false;
+	document.getElementById('allSpellsCbx').disabled = false;
+	document.getElementById('allFoodNPotsCbx').disabled = false;
+	document.getElementById('mountNBagCbx').disabled = false;
+	document.getElementById('feedToTheMoonCbx').disabled = false;
+}
+
 function getRandom5V5Comp() {
 	tryCount++;
+	lockGroupSettings();
 	document.getElementById("tryCount").value = "Try #" + tryCount;
 	document.getElementById('buildIt').innerHTML = "";
 	var playerTypesArray = ['tank', 'heal', 'dps', 'dps', 'support'];
@@ -239,6 +272,7 @@ function getRandomBuild(isSolo) {
 	offhand = false;
 	if(isSolo) {
 		tryCount++;
+		lockSoloSettings();
 		document.getElementById("tryCount").value = "Try #" + tryCount;
 		document.getElementById('soloPlayer').disabled = true;
 		cleanBuildItDiv();
@@ -268,8 +302,27 @@ function cleanSetItUp(){
 	document.getElementById('setItUp').remove();
 }
 
+function toggleSettings() {
+  // Get the checkbox
+  var checkBox = document.getElementById("settingsCbx");
+  // Get the output text
+  var configureIt = document.getElementById("configureIt");
+
+  // If the checkbox is checked, display the output text
+  if (checkBox.checked == true){
+    configureIt.style.display = "block";
+  } else {
+    configureIt.style.display = "none";
+  }
+}
+
 function soloSetUp(){
 	tryCount = 0;
+	unlockSoloSettings();
+	document.getElementById('5v5Conf').style.display = 'none';
+	document.getElementById('soloConf').style.display = 'block';
+	document.getElementById('settingsCbx').disabled = false;
+	document.getElementById('settingsCbx').disabled = false;
 	document.getElementById('buildIt').innerHTML = "";
 	//cleanSetItUp();
 	document.getElementById('soloBtn').disabled = true;
@@ -285,6 +338,9 @@ function soloSetUp(){
 
 function groupSetUp(){
 	tryCount = 0;
+	unlockGroupSettings();
+	document.getElementById('soloConf').style.display = 'none';
+	document.getElementById('5v5Conf').style.display = 'block';
 	document.getElementById('buildIt').innerHTML = "";
 	document.getElementById('groupBtn').disabled = true;
 	document.getElementById('soloBtn').disabled = false;
@@ -305,7 +361,10 @@ function setItUp(){
 	var soloBtnStr = '<input type="button" id="soloBtn" value="Go Solo" onclick="soloSetUp();">';
 	//5v5 Btn
 	var groupBtnStr = '<input type="button" id="groupBtn" value="Go 5V5" onclick="groupSetUp();">';
-	document.getElementById('setItUp').innerHTML = soloBtnStr + groupBtnStr;
+	//Settings ChkBx
+	var settingCbxStr = '<input type="checkbox" id="settingsCbx" name="settingsCbx" onchange="toggleSettings()" disabled><label for="settingsCbx">Settings</label>';
+  
+	document.getElementById('setItUp').innerHTML = soloBtnStr + groupBtnStr + settingCbxStr;
 }
 </script>
 </head>
@@ -317,11 +376,24 @@ function setItUp(){
     <!-- <script type="text/javascript">getRandomBuild()</script> -->
 	<div id="setItUp" style="inline-block"><script type="text/javascript">setItUp();</script></div>
 	<div id="playerNames"></div>
-	<div id="configureIt">
-		<div id="soloConf"></div>
-		<div id="5v5Conf"></div>
-	</div>
 	<div id="buildIt"></div>
+	<div id="configureIt" style="display:none">
+		<div id="soloConf">
+			<input type="checkbox" id="trollItemsCbx" name="trollItemsCbx" onclick="toggleTrollItems()" checked><label for="trollItemsCbx">Troll items</label><br>
+			<input type="checkbox" id="allSpellsCbx" name="allSpellsCbx" onclick="toggleAllSpells()"><label for="allSpellsCbx">All passives and spells</label><br>
+			<input type="checkbox" id="allFoodNPotsCbx" name="allFoodNPotsCbx" onclick="toggleAllFoodNPots()"><label for="allFoodNPotsCbx">All foods and potions</label><br>
+			<input type="checkbox" id="mountNBagCbx" name="mountNBagCbx" onclick="toggleMountNBag()" checked><label for="mountNBagCbx">T4 Random mount and bag</label><br>
+			<input type="checkbox" id="feedToTheMoonCbx" name="feedToTheMoonCbx" onclick="toggleLordVaris()"><label for="feedToTheMoonCbx">I'm rich: unlock some 8.3</label><br>
+		</div>
+		<div id="5v5Conf">
+			<input type="checkbox" id="noFlatCapeCbx" name="noFlatCapeCbx" onclick="toggleFlatCapes()" checked><label for="noFlatCapeCbx">Flat capes</label><br>
+			<input type="checkbox" id="allSpellsGrpCbx" name="allSpellsGrpCbx" onclick="toggleAllGrpSpells()"><label for="allSpellsGrpCbx">All passives and spells</label><br>
+			<input type="checkbox" id="exclusiveModeCbx" name="exclusiveModeCbx" onclick="toggleExclusive()"><label for="exclusiveModeCbx">Exclusive mode</label><br>	
+			<input type="checkbox" id="fullRandomCbx" name="fullRandomCbx" onclick="toggleFullRandom()"><label for="fullRandomCbx">Full random</label><br>
+			<input type="checkbox" id="feedToTheMoonGrpCbx" name="feedToTheMoonGrpCbx" onclick="toggleResetDay()"><label for="feedToTheMoonGrpCbx">We are rich: unlock some 8.3</label><br>
+		</div>
+		<br><p>Disclaimer: settings features not implemented yet lol</p>
+	</div>
 	<div id="analyzeIt">
 	</div>	
 </div>

@@ -3,11 +3,8 @@ Bckgrnd Colour.
 
 init div
 
-btn solo btn 5v5
-Character Name
 Statistics chkbx
 restart btn
-
 
 config div
 	All spells and passives

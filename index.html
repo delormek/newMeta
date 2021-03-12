@@ -16,6 +16,37 @@ p { max-width: 60em; }
 a img { border:none; }
 </style>
 <script type="text/javascript">
+var win = 0;
+var lose = 0;
+var usedWeapons = [];
+var thisTry;
+
+function resetStats(){
+	win = 0;
+	lose = 0;
+	document.getElementById('winLoseRate').innerHTML = "";
+	//usedWeapons = [];
+}
+
+function updateStats(){
+	document.getElementById('winLoseRate').innerHTML = "W/L: " + win + "/" + lose + " - " + (win+lose) + " fight(s) - " + ((win/(win+lose))*100).toFixed(2) + "% WinRate";
+}
+function toggleStatistics(){
+	win = 0;
+	lose = 0;
+	//usedWeapons = [];
+	var checkBox = document.getElementById("statisticsCbx");
+	// Get the output text
+	var analyzeIt = document.getElementById("analyzeIt");
+
+  // If the checkbox is checked, display the output text
+  if (checkBox.checked == true){
+    analyzeIt.style.display = "block";
+  } else {
+    analyzeIt.style.display = "none";
+  }
+}
+
 const ABOUT_STR = 'This is a free for use Albion Online fan-made tool.\n\nRegards\n\nThe Gourgandine';
 // https://stackoverflow.com/questions/1187518/how-to-get-the-difference-between-two-arrays-in-javascript
 function arr_diff (a1, a2) {
@@ -321,7 +352,15 @@ function toggleSettings() {
   }
 }
 
+function enaBleWinLose() {
+  document.getElementById("winBtn").disabled = false;
+  document.getElementById("loseBtn").disabled = false;
+
+}
+
+
 function soloSetUp(){
+	resetStats();
 	tryCount = 0;
 	unlockSoloSettings();
 	document.getElementById('5v5Conf').style.display = 'none';
@@ -332,15 +371,17 @@ function soloSetUp(){
 	document.getElementById('soloBtn').disabled = true;
 	document.getElementById('groupBtn').disabled = false;
 	document.getElementById('playerNames').innerHTML = "";
-	var soloConfStr = "";
 	var playerStr = '<input type="text" id="soloPlayer" value="Character name">';
-	var rollItBtnStr = '<input type="button" id="soloRollBtn" value="Roll" onclick="getRandomBuild(true);">';
+	var rollItBtnStr = '<input type="button" id="soloRollBtn" value="Roll" onclick="enaBleWinLose();getRandomBuild(true);">';
 	var tryCountStr = '<input type="text" id="tryCount" disabled>';
-	document.getElementById('playerNames').innerHTML += playerStr + rollItBtnStr + tryCountStr;
+	var winBtnStr = '<input type="button" id="winBtn" value="OMG I WIN" onclick="win++;updateStats();" disabled>';
+	var loseBtnStr = '<input type="button" id="loseBtn" value="I LOSE" onclick="lose++;updateStats();getRandomBuild(true);" disabled>';
+	document.getElementById('playerNames').innerHTML += playerStr + rollItBtnStr + tryCountStr + winBtnStr + loseBtnStr;
 	
 }
 
 function groupSetUp(){
+	resetStats();
 	tryCount = 0;
 	unlockGroupSettings();
 	document.getElementById('soloConf').style.display = 'none';
@@ -384,22 +425,27 @@ function setItUp(){
 	<div id="buildIt"></div>
 	<div id="configureIt" style="display:none">
 		<div id="soloConf">
-			<input type="checkbox" id="trollItemsCbx" name="trollItemsCbx" onclick="toggleTrollItems()" checked><label for="trollItemsCbx">Troll items</label><br>
+			<input type="checkbox" id="trollStrictModeCbx" name="trollStrictModeCbx" onclick="toggleStrictMode()" checked><label for="trollStrictModeCbx">T4 Strict mode (original flavour - consumables Tier = 4)</label><br>
+			<input type="checkbox" id="trollItemsCbx" name="trollItemsCbx" onclick="toggleTrollItems()" checked><label for="trollItemsCbx">Troll items (eg: snowball, crafting food...)</label><br>
 			<input type="checkbox" id="allSpellsCbx" name="allSpellsCbx" onclick="toggleAllSpells()"><label for="allSpellsCbx">All passives and spells</label><br>
 			<input type="checkbox" id="allFoodNPotsCbx" name="allFoodNPotsCbx" onclick="toggleAllFoodNPots()"><label for="allFoodNPotsCbx">All foods and potions</label><br>
 			<input type="checkbox" id="mountNBagCbx" name="mountNBagCbx" onclick="toggleMountNBag()" checked><label for="mountNBagCbx">T4 Random mount and bag</label><br>
 			<input type="checkbox" id="feedToTheMoonCbx" name="feedToTheMoonCbx" onclick="toggleLordVaris()"><label for="feedToTheMoonCbx">I'm rich: unlock some 8.3</label><br>
+			<input type="checkbox" id="statisticsCbx" name="statisticsCbx" onclick="toggleStatistics()"><label for="statisticsCbx">Statistics</label><br>
 		</div>
 		<div id="5v5Conf">
 			<input type="checkbox" id="noFlatCapeCbx" name="noFlatCapeCbx" onclick="toggleFlatCapes()" checked><label for="noFlatCapeCbx">Flat capes</label><br>
 			<input type="checkbox" id="allSpellsGrpCbx" name="allSpellsGrpCbx" onclick="toggleAllGrpSpells()"><label for="allSpellsGrpCbx">All passives and spells</label><br>
 			<input type="checkbox" id="exclusiveModeCbx" name="exclusiveModeCbx" onclick="toggleExclusive()"><label for="exclusiveModeCbx">Exclusive mode</label><br>	
-			<input type="checkbox" id="fullRandomCbx" name="fullRandomCbx" onclick="toggleFullRandom()"><label for="fullRandomCbx">Full random</label><br>
+			<input type="checkbox" id="fullRandomCbx" name="fullRandomCbx" onclick="toggleFullRandom()"><label for="fullRandomCbx">Full random (i.e. no logic at all)</label><br>
 			<input type="checkbox" id="feedToTheMoonGrpCbx" name="feedToTheMoonGrpCbx" onclick="toggleResetDay()"><label for="feedToTheMoonGrpCbx">We are rich: unlock some 8.3</label><br>
 		</div>
 		<br><p>Disclaimer: settings features not implemented yet lol</p>
 	</div>
 	<div id="analyzeIt">
+		<div id="winLoseRate"></div>
+		<div id="weaponsHistory"></div>
+	</div>
 	</div>	
 </div>
 </body>

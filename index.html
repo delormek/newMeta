@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<!-- IF YOU READ THIS THEN YOU ARE CURIOUS LOL. -->
+<!-- I AM NOT A WEB DEVELOPER (300/700 SPEC MB LMAO), AND THIS CODE MAY REQUIRE A LOT OF REFACTOR pepegif -->
+<!-- IF YOU ARE AN EXPERIMENTED 5V5 PLAYER I AM LOOKING FOR SOME COHERENT BUILD LISTS -->
+<!-- AND/OR COMPS SO WE (YOU AND ME, IMAGINE LOL) COULD MANAGE TO INSERT SOME LOGIG TO CREATE COHERENT RANDOMIZED 5V5 COMPS -->
+<!-- I'M BOTH INTERESTED IN HGs AND CRYSTALS INFORMATION. THANK YOU. -->
+<!-- PS: IF YOU ARE A 700/700 SPEC IN WEB DEV AND YOU HAVE A LOT OF FREE TIME, FEEL FREE TO FORK MY REPO. -->
+<!-- Red is dead. Love. -->
 <html lang="en">
 <head>
 <link rel="icon" 
@@ -47,7 +54,7 @@ function toggleStatistics(){
   }
 }
 
-const ABOUT_STR = 'This is a free for use Albion Online fan-made tool.\n\nRegards\n\nThe Gourgandine';
+const ABOUT_STR = 'Hello stranger!\n\nThis is a free for use Albion Online fan-made tool, built on the flight with a text editor.\n\nRegards\n\nGourgandine';
 // https://stackoverflow.com/questions/1187518/how-to-get-the-difference-between-two-arrays-in-javascript
 function arr_diff (a1, a2) {
     var a = [], diff = [];
@@ -75,6 +82,8 @@ var offhand = false;
 var weaponCopy= '';
 var tryCount = 0;
 
+//ls -a > items.txt
+//_IMAGES_ARRAY = ['',''];
 const BAG_IMAGES_ARRAY = ['T4_BAG.png','T4_SATCHEL.png'];
 const HEAD_IMAGES_ARRAY = ['T4_HEAD_CLOTH_HELL.png','T4_HEAD_CLOTH_KEEPER.png','T4_HEAD_CLOTH_MORGANA.png','T4_HEAD_CLOTH_PUR.png','T4_HEAD_CLOTH_ROYAL.png','T4_HEAD_CLOTH_SET1.png','T4_HEAD_CLOTH_SET2.png','T4_HEAD_CLOTH_SET3.png','T4_HEAD_LEATHER_HELL.png','T4_HEAD_LEATHER_MORGANA.png','T4_HEAD_LEATHER_ROYAL.png','T4_HEAD_LEATHER_SET1.png','T4_HEAD_LEATHER_SET2.png','T4_HEAD_LEATHER_SET3.png','T4_HEAD_LEATHER_TEN.png','T4_HEAD_LEATHER_UNDEAD.png','T4_HEAD_PLATE_HELL.png','T4_HEAD_PLATE_KEEPER.png','T4_HEAD_PLATE_ROYAL.png','T4_HEAD_PLATE_SET1.png','T4_HEAD_PLATE_SET2.png','T4_HEAD_PLATE_SET3.png','T4_HEAD_PLATE_UNDEAD.png','T4_HEAD_PLATE_VALOR.png'];
 const CAPE_IMAGES_ARRAY = ['T4_CAPE.png','T4_CAPEITEM_DEMON.png','T4_CAPEITEM_FW_BRIDGEWATCH.png','T4_CAPEITEM_FW_FORTSTERLING.png','T4_CAPEITEM_FW_LYMHURST.png','T4_CAPEITEM_FW_MARTLOCK.png','T4_CAPEITEM_FW_THETFORD.png','T4_CAPEITEM_HERETIC.png','T4_CAPEITEM_KEEPER.png','T4_CAPEITEM_MORGANA.png','T4_CAPEITEM_UNDEAD.png'];
@@ -251,6 +260,7 @@ function lockGroupSettings() {
 }
 
 function lockSoloSettings() {
+	document.getElementById('trollStrictModeCbx').disabled = true;
 	document.getElementById('trollItemsCbx').disabled = true;
 	document.getElementById('allSpellsCbx').disabled = true;
 	document.getElementById('allFoodNPotsCbx').disabled = true;
@@ -268,6 +278,7 @@ function unlockGroupSettings() {
 }
 
 function unlockSoloSettings() {
+	document.getElementById('trollStrictModeCbx').disabled = false;
 	document.getElementById('trollItemsCbx').disabled = false;
 	document.getElementById('allSpellsCbx').disabled = false;
 	document.getElementById('allFoodNPotsCbx').disabled = false;
@@ -330,7 +341,7 @@ function getRandomBuild(isSolo) {
 		//insertBr();
 		getMount('buildIt');
 	
-	}
+	}//LMAO THE ELSE PART WENT AWAY
 }
 
 function cleanSetItUp(){
@@ -358,6 +369,10 @@ function enaBleWinLose() {
 
 }
 
+function hideSoloRollBtn(){
+  document.getElementById("soloRollBtn").style.display = 'none';
+}
+
 
 function soloSetUp(){
 	resetStats();
@@ -372,7 +387,7 @@ function soloSetUp(){
 	document.getElementById('groupBtn').disabled = false;
 	document.getElementById('playerNames').innerHTML = "";
 	var playerStr = '<input type="text" id="soloPlayer" value="Character name">';
-	var rollItBtnStr = '<input type="button" id="soloRollBtn" value="Roll" onclick="enaBleWinLose();getRandomBuild(true);">';
+	var rollItBtnStr = '<input type="button" id="soloRollBtn" value="Roll" onclick="hideSoloRollBtn();enaBleWinLose();getRandomBuild(true);">';
 	var tryCountStr = '<input type="text" id="tryCount" disabled>';
 	var winBtnStr = '<input type="button" id="winBtn" value="OMG I WIN" onclick="win++;updateStats();" disabled>';
 	var loseBtnStr = '<input type="button" id="loseBtn" value="I LOSE" onclick="lose++;updateStats();getRandomBuild(true);" disabled>';
@@ -419,8 +434,7 @@ function setItUp(){
 <h1>Random Generated Albion Online Builds: NEW META ?</h1>
 </div>
 <div>
-    <!-- <script type="text/javascript">getRandomBuild()</script> -->
-	<div id="setItUp" style="inline-block"><script type="text/javascript">setItUp();</script></div>
+	<div id="setItUp"><script type="text/javascript">setItUp();</script></div>
 	<div id="playerNames"></div>
 	<div id="buildIt"></div>
 	<div id="configureIt" style="display:none">
@@ -440,7 +454,7 @@ function setItUp(){
 			<input type="checkbox" id="fullRandomCbx" name="fullRandomCbx" onclick="toggleFullRandom()"><label for="fullRandomCbx">Full random (i.e. no logic at all)</label><br>
 			<input type="checkbox" id="feedToTheMoonGrpCbx" name="feedToTheMoonGrpCbx" onclick="toggleResetDay()"><label for="feedToTheMoonGrpCbx">We are rich: unlock some 8.3</label><br>
 		</div>
-		<br><p>Disclaimer: settings features not implemented yet lol</p>
+		<br><p>DISCLAIMER: settings features not implemented yet lol</p>
 	</div>
 	<div id="analyzeIt">
 		<div id="winLoseRate"></div>
